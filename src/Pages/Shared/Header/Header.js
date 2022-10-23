@@ -9,13 +9,14 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import LeftSideNav from '../LeftSideNav/LeftSideNav';
+
 const Header = () => {
   const {user, logOut} = useContext(AuthContext);
 
 const handleLogOut = () => {
   logOut()
   .then(() => {})
-  .catct(error => console.error(error))
+  .catch(error => console.error(error))
 }
 
     return (
@@ -40,31 +41,31 @@ const handleLogOut = () => {
             </NavDropdown>
           </Nav>
           <Nav className='align-items-center'>
-            <Nav.Link href="#deets" >
+            <>
               {
-                user?.uid
+                user?.uid 
                 ?
                <>
                 <span>{user?.displayName} </span>
-                <Button variant="primary" onClick={handleLogOut}>Logout</Button>
+                <Button variant="success" onClick={handleLogOut}>Logout</Button>
                </>
                 :
                 <>
-                 <Link to='/login'>Login</Link>
-                 <Link to='/register'>Register</Link>
+                 <Link to='/login' className='ms-3 text-decoration-none bg-danger text-white p-2 rounded fw-bold'>Login</Link>
+                 <Link to='/register' className='ms-3 text-decoration-none bg-warning text-white p-2 rounded fw-bold'>Register</Link>
                 </>
               }
               
             
-            </Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
+            </>
+            <Link to='/profile'>
               {
                 user?.photoURL ?
                 <Image style={{height:'60px'}} roundedCircle src={user.photoURL}></Image>
                 :
                 <FaUser></FaUser>
               }
-            </Nav.Link>
+            </Link>
           </Nav>
           <div  className="d-lg-none">
             <LeftSideNav></LeftSideNav>
